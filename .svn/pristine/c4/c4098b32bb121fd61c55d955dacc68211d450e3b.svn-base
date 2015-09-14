@@ -1,0 +1,121 @@
+{% load staticfiles %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>{{ title }}</title>
+
+    <!-- Bootstrap core CSS -->
+      <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"-->
+    <!-- Bootstrap theme -->
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+
+
+      <!--tinymce-->
+    <script type="text/javascript" src="/static/js/tinymce/tinymce.min.js"></script>
+    <script src="/static/js/tinymce/config.js"></script>
+    <!--BaiduTongji-->
+    <!--script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?8edf56638fcb15b11b619e617058bf5a";
+	  var s = document.getElementsByTagName("script")[0];
+	  s.parentNode.insertBefore(hm, s);
+	})();
+     </script-->
+
+    <link href="/static/prism.css" rel="stylesheet" />
+  </head>
+
+  <body role="document">
+  <script src="/static/prism.js" ></script>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            <img class="imagehead" src="\static\image\head.jpg">
+          <a class="navbar-brand" href="#">Foolself Blog</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+              <li class="active" ><a href="{% url 'home'%}"><span class="glyphicon glyphicon-home">Home</span></a></li>
+              <li><a href="{% url 'about'%}"><span class="glyphicon glyphicon-info-sign">About</span></a></li>
+              <li><a href="{% url 'message'%}"><span class="glyphicon glyphicon-home">Message</span></a></li>
+              {% if user.is_authenticated %}
+                <li><a href="{% url 'article_draft_list'%}"><span class="glyphicon glyphicon-file">Draft</span></a></li>
+              <li><a href="{% url 'article_new'%}"><span class="glyphicon glyphicon-plus">Add</span></a></li>
+              {% endif %}
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+              {% if user.is_authenticated %}
+              <li><a href="{% url 'logout'%}"><span class="glyphicon glyphicon-log-out">Logout</span></a></li>
+              {% else %}
+              <li><a href="{% url 'login'%}"><span class="glyphicon glyphicon-log-in">Login</span></a></li>
+              {% endif %}
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+  <div class="container theme-showcase" role="main">
+
+
+        <div class="row">
+            <div class="col-md-9">
+			    {% block content %}
+			    {% endblock %}
+		    </div>
+            <div class="col-md-3">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                    <h3 class="panel-title">Category</h3>
+                    </div>
+                    {% for category in category_list %}
+                    <div class="panel-body">
+                        <a href="#">{{ category }}&nbsp&nbsp<span class="badge">14</span></a>
+                    </div>
+                    {% endfor %}
+                </div>
+<br>
+<h2>Tags</h2>
+<hr class="featurette-divider">
+{% for key,value in tag_dict.items %}
+        <button type="button" class="{{ value }}">{{ key }}</button>
+{% endfor %}
+
+            </div>
+        </div>
+
+        <br><br>
+
+<hr class="featurette-divider">
+<footer>
+<p><p class="pull-left">&copy; 2014 - 2016 Foolself. All Rights Reserved. </p><p class="pull-right"> Email: wi1191122731@gmail.com</p></p>
+</footer>
+</div> <!-- /container -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
+

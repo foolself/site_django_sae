@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+	<div class="date">
+		{% if post.pulished_date %}
+			{{ post.pulished_date }}
+		{% endif %}
+	</div>
+	<h1>{{ post.title }}</h1>
+	<p>{{ post.text|linebreaks }}</p>
+{% endblock %}

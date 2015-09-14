@@ -1,0 +1,9 @@
+<html>
+<title>foolselfblog</title>
+<body>
+<div>
+{% block content %}
+{% endblock %}
+</div>
+</body>
+</html>

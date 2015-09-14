@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<h3>A Blog Powered by Django</h3>
+<h3>About Author</h3>
+<div>
+    <p>sinaweibo: <a href="#">fool_self</a></p>
+    <p>Email: wi1191122731@gmail.com</p>
+</div>
+{% endblock %}

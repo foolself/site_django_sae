@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="/static/js/tinymce/tinymce.min.js"></script>
+    <script src="/static/js/tinymce/config.js"></script>
+</head>
+    <h1>New article</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>

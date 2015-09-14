@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h2>A Blog Powered by Django</h2>
+        <h3>About Author</h3>
+        <p>sinaweibo: <a href="#">fool_self</a></p>
+        <p>Email: wi1191122731@gmail.com</p>
+      </div>
+{% endblock %}

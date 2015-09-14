@@ -1,0 +1,37 @@
+{% load staticfiles %}
+{% load i18n %}
+<html>
+<title>foolselfblog</title>
+<head>
+    <!--富文本-->
+    <script type="text/javascript" src="/static/js/tinymce/tinymce.min.js"></script>
+    <script src="/static/js/tinymce/config.js"></script>
+    <!--代码高亮-->
+    <link href="{% static 'prism.css' %}" rel="stylesheet" />
+    <!--百度统计-->
+    <script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?8edf56638fcb15b11b619e617058bf5a";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+     </script>
+
+</head>
+<body>
+<script src="{% static "prism.js" %}" data-manual></script>
+<div>
+    <li><a href="{% url 'home' %}">foolself</a></li>
+    <li><a href="{% url 'article_draft_list' %}">draftlist</a></li>
+    <li><a href="{% url 'article_new' %}">add</a></li>
+    <li><a href="{% url 'login' %}">login</a></li>
+    <li><a href="{% url 'logout' %}">logout</a></li>
+</div>
+<div>
+{% block content %}
+{% endblock %}
+</div>
+</body>
+</html>

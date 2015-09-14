@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h2>A Blog Powered by Django</h2>
+        <h3>About Author</h3>
+        <p>sinaweibo: <a href="http://weibo.com/522878950" target="_blank">fool_self</a></p>
+        <p>Email: wi1191122731@gmail.com</p>
+      </div>
+
+<ul class="media-list">
+            <li class="media">
+          <div class="media-left">
+            <a href="#">
+              <img class="media-object" data-src="holder.js/64x64" alt="Generic placeholder image">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">Nested media heading</h4>
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+          </div>
+<div class="media">
+      <div class="media-left">
+        <a href="#">
+          <img class="media-object" data-src="holder.js/64x64" alt="Generic placeholder image">
+        </a>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">Media heading</h4>
+        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+</div>
+    </div>
+    </li>
+    </ul>
+{% endblock %}

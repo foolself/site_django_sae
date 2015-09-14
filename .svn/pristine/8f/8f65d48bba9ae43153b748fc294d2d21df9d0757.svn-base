@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="date">
+	{% if article.published_date %}
+		{{ article.published_date }}
+	{% else %}
+		{% if user.is_authenticated %}
+			<a href="{% url 'blog.views.article_publish' pk=article.pk %}">Publish</a>
+		{% endif %}
+	{% endif %}
+	{% if user.is_authenticated %}
+		<a href="{% url 'article_edit' pk=article.pk %}">edit</a>
+		<a href="{% url 'article_remove' pk=article.pk %}">remove</a>
+	{% endif %}
+</div>
+	<h1>{{ article.title }}</h1>
+	<div class="content">{{ article.text | safe }}</div>
+<div class="comment">
+	{% for comment in comments %}
+	<p>{{ comment.content }}</p>
+	{% endfor %}
+</div>
+<div id="commentform">
+	<h3 id="respond">Add your comment now</h3>
+	{% if not request.user.is_authenticated %}
+    <div class='login_info'>Comment after login<b><a href="{% url 'login' %}">&raquo;Login</a>&nbsp;<a href="{% url 'reg' %}">&raquo;Register</a></b></div>
+    {% else %}
+    <div class='login_info'><b>{{ request.user.username }}</b>,Comment here&nbsp;<a href="{% url 'logout' %}">Logout</a></div>
+    {% endif %}
+    <form action="{% url 'comment_post' %}" method="post">
+    {% csrf_token %}
+    <p>{{ comment_form.author }}
+    <label for="author">Name (required)</label></p>
+
+    <p>{{ comment_form.email }}
+    <label for="email">Email (Will NOT be published) (required)</label></p>
+
+    <!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code class=&quot;&quot; title=&quot;&quot; data-url=&quot;&quot;&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; &lt;pre class=&quot;&quot; title=&quot;&quot; data-url=&quot;&quot;&gt; &lt;span class=&quot;&quot; title=&quot;&quot; data-url=&quot;&quot;&gt; </small></p>-->
+
+    <p>{{ comment_form.content }}</p>
+
+    <p>
+        {{ comment_form.article }}
+        <input name="submit" type="submit" id="submit" tabindex="5" value="Submit" class="button" />
+    </p>
+    </form>
+
+</div>
+{% endblock %}

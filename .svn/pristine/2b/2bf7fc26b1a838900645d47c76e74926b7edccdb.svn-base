@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="date">
+		{% if user.is_authenticated %}
+            {{ article.published_date }}
+			<a href="{% url 'blog.views.article_publish' pk=article.pk %}">Publish</a>
+		{% endif %}
+	{% if user.is_authenticated %}
+		<a href="{% url 'article_edit' pk=article.pk %}">edit</a>
+		<a href="{% url 'article_remove' pk=article.pk %}">remove</a>
+	{% endif %}
+</div>
+	<h1 align="center">{{ article.title }}</h1>
+    <p align="right">--{{ article.published_date}}</p>
+	<div class="content">{{ article.text | safe }}</div>
+
+    <hr class="featurette-divider">
+
+      <ol class="commentlist">
+          {% for comment in comment_list %}
+          <li id="comment-59418">
+                <div class="top"><a href='{{ comment.url }}' rel='external nofollow' class='url'>{{ comment.username }}</a><span class="time"> @ <a href="#comment-59418" title="">{{ comment.date_publish | date:'Y-m-d H:i:s' }}</a></span></div>
+                <div><img alt='' src="/static/image/default_head.png" class='imagehead' height='32' width='32' /></div>
+
+                <div class="body">
+                                <p>{{ comment.content | safe }}</p>
+                </div>
+          </li>
+          {% for children_comment in comment.children_comment %}
+          <li id="comment-59542">
+                <div class="reply">
+                  <div class="top"><a href="{{ children_comment.url }}" rel="external nofollow" class="url">{{ children_comment.username }}</a><span class="time"> @ <a href="#comment-59543" title="">{{ children_comment.date_publish | date:'Y-m-d H:i:s' }}</a></span></div>
+                  <div><img alt="" src="/static/image/default_head.png" class="avatar avatar-32 photo" height="32" width="32"></div>
+
+                  <div class="body">
+                                        {{ children_comment.content | safe }}                  </div>
+                </div>
+          </li>
+          {% endfor %}
+          {% endfor %}
+      </ol>
+
+    <div id="commentform">
+    <h3 id="respond">Add your comment now</h3>
+<form method="POST" action="{% url 'comment_post' %}" class="post-form">{% csrf_token %}
+    <p>Name: {{ comment_form.username }}</p>
+    <p>Email:   {{ comment_form.email }}</p>
+    <p>content:{{ comment_form.content }}</p>
+    <p style="visibility:hidden">{{ comment_form.article }}</p>
+    <button type="submit" class="save btn btn-default">Send</button>
+</form>
+    </div>
+{% endblock %}

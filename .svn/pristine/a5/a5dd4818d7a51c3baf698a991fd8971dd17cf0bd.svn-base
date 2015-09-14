@@ -1,0 +1,13 @@
+from django.conf.urls import url
+from blog import views
+
+urlpatterns = [url(r'^$', views.home,name = 'home'),
+               url(r'^accounts/login/$', 'django.contrib.auth.views.login',name = 'login'),
+               url(r'^accounts/logout/$','django.contrib.auth.views.logout',{'next_page':'/'},name = 'logout'),
+               url(r'^article/(?P<pk>[0-9]+)/edit/$',views.article_edit,name = 'article_edit'),
+               url(r'^article/(?P<pk>[0-9]+)/$',views.article_detail,name = 'article_detail'),
+               url(r'^article/(?P<pk>[0-9]+)/remove/$',views.article_remove,name='article_remove'),
+               url(r'^article/new/$',views.article_new,name='article_new'),
+               url(r'^article/(?P<pk>[0-9]+)/publish/$',views.article_publish,name='article_publish'),
+               url(r'^drafts/$',views.article_draft_list,name='article_draft_list'),
+               ]

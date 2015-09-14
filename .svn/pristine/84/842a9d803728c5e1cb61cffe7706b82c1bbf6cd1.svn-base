@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<h1>Message board</h1>
+{% for message in messages %}
+<div>
+<div>
+    <hr class="featurette-divider">
+    <div style="font-size:20px">{{ message.date }}...{{ message.name }} said:
+        {% if user.is_authenticated %}
+    <span style="float:right"><a href="{% url 'message_delete' pk=message.pk %}">Delete</a></div>
+        {% endif %}
+</div>
+    <h4>{{ message.content | safe }}</h4>
+</div>
+{% endfor %}
+<h2>Edit Message</h2>
+<form method="POST" action="{% url 'message_post' %}" class="post-form">{% csrf_token %}
+    {{ message_form.as_p }}
+    <button type="submit" class="save btn btn-default">Send</button>
+</form>
+{% endblock %}
