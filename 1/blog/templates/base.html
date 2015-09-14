@@ -23,6 +23,8 @@
       <!--tinymce-->
     <script type="text/javascript" src="/static/js/tinymce/tinymce.min.js"></script>
     <script src="/static/js/tinymce/config.js"></script>
+    <!--sinaweibo api-->
+    <meta property="wb:webmaster" content="20a959da284bf50f" />
     <!--BaiduTongji-->
     <!--script>
 	var _hmt = _hmt || [];
@@ -81,13 +83,24 @@
 			    {% endblock %}
 		    </div>
             <div class="col-md-3">
-                <div class="panel panel-success">
+                <div class="panel panel-success" id="Category">
                     <div class="panel-heading">
                     <h3 class="panel-title">Category</h3>
                     </div>
                     {% for category in category_list %}
                     <div class="panel-body">
-                        <a href="#">{{ category }}&nbsp&nbsp<span class="badge">14</span></a>
+                        <a href="{% url 'category' %}?cid={{ category.id }}">{{ category.name }}&nbsp&nbsp<span class="badge"></span></a>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="panel panel-info" id="archive">
+                    <div class="panel-heading">
+                    <h3 class="panel-title">Archive</h3>
+                    </div>
+                    {% for archive in archive_list %}
+                    <div class="panel-body">
+                        <a href="#">{{ archive }}&nbsp&nbsp<span class="badge"></span></a>
                     </div>
                     {% endfor %}
                 </div>
@@ -95,9 +108,9 @@
 <h2>Tags</h2>
 <hr class="featurette-divider">
 {% for key,value in tag_dict.items %}
-        <button type="button" class="{{ value }}">{{ key }}</button>
+        <button type="button" class="{{ value }}"><a href="{% url 'tag' %}?tid={{ key.id }}" style="color:#000000">{{ key }}</a></button>
 {% endfor %}
-
+</div>
             </div>
         </div>
 
