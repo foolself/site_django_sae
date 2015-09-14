@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -24,6 +25,19 @@ class Category(models.Model):
     def __unicode__(self):
         return self.name
 
+# 自定义一个文章Model的管理器
+# 1、新加一个数据处理的方法
+# 2、改变原有的queryset
+class ArticleManager(models.Manager):
+    def distinct_date(self):
+        distinct_date_list = []
+        date_list = self.values('published_date')
+        for date in date_list:
+            date = date['published_date']
+            if date not in distinct_date_list:
+                distinct_date_list.append(date)
+        return distinct_date_list
+
 class Article(models.Model):
     author=models.ForeignKey(User)
     title=models.CharField(max_length=200)
@@ -31,11 +45,13 @@ class Article(models.Model):
     text=models.TextField()
     created_date=models.DateField(default=timezone.now)
     published_date=models.DateField(blank=True,null=True)
-    like_count = models.IntegerField(blank=True,null=True)
-    view_count = models.IntegerField(blank=True,null=True)
-    comment_count = models.IntegerField(blank=True,null=True)
+    like_count = models.IntegerField(default=0,blank=True,null=True)
+    view_count = models.IntegerField(default=0,blank=True,null=True)
+    comment_count = models.IntegerField(default=0,blank=True,null=True)
     category = models.ForeignKey(Category, blank=True, null=True, verbose_name='Category')
     tag = models.ManyToManyField(Tag, verbose_name='Tag')
+
+    objects = ArticleManager()
 
     def publish(self):
         self.published_date=timezone.now()

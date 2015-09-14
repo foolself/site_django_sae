@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 def global_setting(request):
 	title = "foolself blog"
 	category_list = Category.objects.all()[:6]
+	archive_list = Article.objects.distinct_date()
 	tag_list = Tag.objects.all()
 	tag_format_ = ["btn btn-danger","btn btn-success","btn btn-default","btn btn-info","btn btn-warning","btn btn-primary",]
 	tag_dict = {}
@@ -37,6 +38,12 @@ def article_detail(request,pk):
 				break
 		if comment.pid is None:
 			comment_list.append(comment)
+	if article.view_count == None:
+		article.view_count = 1
+	else:
+		article.view_count += 1
+	article.comment_count = len(comments)
+	article.save()
 	return render(request,'article_detail.html',locals())
 
 def comment_post(request):
@@ -46,6 +53,7 @@ def comment_post(request):
                                              email=comment_form.cleaned_data["email"],
                                              content=comment_form.cleaned_data["content"],
                                              article=comment_form.cleaned_data["article"],
+											 pid=comment_form.cleaned_data["pid"],
                                              user=request.user if request.user.is_authenticated() else None)
 		comment.save()
 	else:
@@ -118,6 +126,28 @@ def message_delete(request,pk):
 	message=get_object_or_404(Message,pk=pk)
 	message.delete()
 	return redirect('blog.views.message')
+
+def category(request):
+	cid = request.GET.get('cid', None)
+	try:
+		category = Category.objects.get(pk=cid)
+	except Category.DoesNotExist:
+		return render(request, 'failure.html', {'reason': 'category not exit'})
+	article_list = Article.objects.filter(category=category)
+	return render(request, 'category.html', locals())
+
+def tag(request):
+	tid = request.GET.get('tid', None)
+	try:
+		tag = Tag.objects.get(pk=tid)
+	except Tag.DoesNotExist:
+		return render(request, 'failure.html', {'reason': 'tag not exit'})
+	article_list = Article.objects.filter(tag=tag)
+	return render(request, 'tag.html', locals())
+
+def archive(request):
+
+	return render(request, 'archive.html')
 
 def about(request):
 	return render(request,'about.html')
