@@ -14,7 +14,10 @@ urlpatterns = [url(r'^$', home,name = 'home'),
                url(r'^article/new/$',article_new,name='article_new'),
                url(r'^article/(?P<pk>[0-9]+)/publish/$',article_publish,name='article_publish'),
                url(r'^drafts/$',article_draft_list,name='article_draft_list'),
-               url(r'^comment/post/$',comment_post,name='comment_post')
+               url(r'^comment/post/$',comment_post,name='comment_post'),
+               url(r'^category/$', category, name='category'),
+               url(r'^archive/$', archive, name='archive'),
+               url(r'^tag/$', tag, name='tag'),
 
 
                ]
