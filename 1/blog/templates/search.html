@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+{{ query }}
+{% for item in result %}
+<h2 class="featurette-heading"><a href="{% url 'blog.views.article_detail' pk=item.pk %}">{{ item.title }}</a></h2>
+{% endfor %}
+{% endblock %}

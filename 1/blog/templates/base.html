@@ -1,7 +1,7 @@
 {% load staticfiles %}
 {% load i18n %}
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:wb="http://open.weibo.com/wb">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +12,7 @@
     <link rel="icon" href="../../favicon.ico">
 
     <title>{{ title }}</title>
-
+    <link rel="shortcut icon" href="/static/fooselfblog.ico" type="image/icon">
     <!-- Bootstrap core CSS -->
       <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!--link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"-->
@@ -25,6 +25,7 @@
     <script src="/static/js/tinymce/config.js"></script>
     <!--sinaweibo api-->
     <meta property="wb:webmaster" content="20a959da284bf50f" />
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=3125712034" type="text/javascript" charset="utf-8"></script>
     <!--BaiduTongji-->
     <!--script>
 	var _hmt = _hmt || [];
@@ -51,7 +52,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-            <img class="imagehead" src="\static\image\head.jpg">
+            <!--img class="imagehead" src="\static\image\head.jpg"-->
           <a class="navbar-brand" href="#">Foolself Blog</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
@@ -59,6 +60,13 @@
               <li class="active" ><a href="{% url 'home'%}"><span class="glyphicon glyphicon-home">Home</span></a></li>
               <li><a href="{% url 'about'%}"><span class="glyphicon glyphicon-info-sign">About</span></a></li>
               <li><a href="{% url 'message'%}"><span class="glyphicon glyphicon-home">Message</span></a></li>
+              <li><form action="{% url 'search'%}" class="navbar-form navbar-left" role="search">
+<div class="input-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" aria-describedby="basic-addon1">
+    <span class="input-group-addon" id="basic-addon1"><button type="submit" class="glyphicon glyphicon-search" style="background-color: Transparent;border-style :none;"></button></span>
+</div>
+      </form>
+              </li>
               {% if user.is_authenticated %}
                 <li><a href="{% url 'article_draft_list'%}"><span class="glyphicon glyphicon-file">Draft</span></a></li>
               <li><a href="{% url 'article_new'%}"><span class="glyphicon glyphicon-plus">Add</span></a></li>
@@ -68,7 +76,8 @@
               {% if user.is_authenticated %}
               <li><a href="{% url 'logout'%}"><span class="glyphicon glyphicon-log-out">Logout</span></a></li>
               {% else %}
-              <li><a href="{% url 'login'%}"><span class="glyphicon glyphicon-log-in">Login</span></a></li>
+              <li><wb:login-button type="3,2" onlogin="login" onlogout="logout">登录按钮</wb:login-button></li>
+              <!--li><a href="{% url 'login'%}"><span class="glyphicon glyphicon-log-in">Login</span></a></li-->
               {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
@@ -112,9 +121,8 @@
 {% endfor %}
 </div>
             </div>
-        </div>
 
-        <br><br>
+   <br><br>
 
 <hr class="featurette-divider">
 <footer>
