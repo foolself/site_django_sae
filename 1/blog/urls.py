@@ -1,3 +1,4 @@
+#-*- coding=utf-8 -*-
 from django.conf.urls import url, include
 from blog.views import*
 
@@ -18,6 +19,13 @@ urlpatterns = [url(r'^$', home,name = 'home'),
                url(r'^category/$', category, name='category'),
                url(r'^archive/$', archive, name='archive'),
                url(r'^tag/$', tag, name='tag'),
+               url(r'^search/$',search,name='search'),
 
+                #url(r'^login/$', login, name='login'),                           # 登陆
+                url(r'^login/weibo/$', weiboLogin, name='weiboLogin'),            # 登陆
+                #url(r'^logout/$', 'logout', name='logout'),                        # 登出
+                url(r'^login/weibo_check/$', weibo_check, name='weibo_check'),     # 微博回调地址
+                #url(r'^register/$', 'register', name='register'),
+               #url(r'^codetheme/get_user_info/$', 'get_user_info', name='get_user_info'),
 
                ]

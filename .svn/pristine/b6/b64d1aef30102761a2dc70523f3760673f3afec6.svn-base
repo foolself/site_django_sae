@@ -1,9 +1,0 @@
-{% for article in article_list %}
-<div>
-    <h1>{{ article.title }}</h1>
-    <a class="btn btn-default" href="{% url 'article_edit' pk=article.pk %}">edit</a>
-    <p>{{ article.author }} {{ article.published_date }}</p>
-    <p>{{ article.text | safe }}</p>
-</div>
-
-{% endfor %}
