@@ -1,33 +1,44 @@
-{% load staticfiles %}
-{% load i18n %}
-<!DOCTYPE html>
-<html lang="zh-CN" xmlns:wb="http://open.weibo.com/wb">
+﻿<!DOCTYPE html>
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
-    <title>{{ title }}</title>
-    <link rel="shortcut icon" href="/static/fooselfblog.ico" type="image/icon">
-    <!-- Bootstrap core CSS -->
-      <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!--link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"-->
-    <!-- Bootstrap theme -->
-    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
-
-
-      <!--tinymce-->
-    <script type="text/javascript" src="/static/js/tinymce/tinymce.min.js"></script>
+    <!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>foolselfblog</title>
+	<link rel="shortcut icon" href="/static./images/blog.ico" type="image/x-icon">
+	<meta name="description" content="Free Responsive Html5 Css3 Templates Designed by Kimmy | ">
+	<meta name="author" content="">
+	
+    <!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <!-- CSS
+  ================================================== -->
+  	<link rel="stylesheet" href="/static/css/zerogrid.css">
+	<link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/responsive.css">
+	
+	<!--[if lt IE 8]>
+       <div style=' clear: both; text-align:center; position: relative;'>
+         <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+           <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
+        </a>
+      </div>
+    <![endif]-->
+    <!--[if lt IE 9]>
+		<script src="/static/js/html5.js"></script>
+		<script src="/static/js/css3-mediaqueries.js"></script>
+	<![endif]-->
+	<!--tinymce-->
+	<script type="text/javascript" src="/static/js/tinymce/tinymce.min.js"></script>
     <script src="/static/js/tinymce/config.js"></script>
-    <!--sinaweibo api-->
+<!--sinaweibo api-->
     <meta property="wb:webmaster" content="20a959da284bf50f" />
     <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=3125712034" type="text/javascript" charset="utf-8"></script>
-    <!--BaiduTongji-->
-    <!--script>
+    <!--BaiduTongji>
+    <script>
 	var _hmt = _hmt || [];
 	(function() {
 	  var hm = document.createElement("script");
@@ -36,107 +47,81 @@
 	  s.parentNode.insertBefore(hm, s);
 	})();
      </script-->
-
+	<!--代码高亮-->
     <link href="/static/prism.css" rel="stylesheet" />
-  </head>
+</head>
+<body>
+<!--代码高亮-->
+<script src="/static/prism.js" ></script>
+<div class="wrap-body zerogrid">
+<!--------------Header--------------->
+<header>
+	<div class="wrap-header">
+		
+		<div class="top">
+			<div class="socials">
+				<ul>
+					<li><a href="http://github.com/foolself/" target="_blank"><img  src="/static/images/socials/github.png" /></a></li>
+					<li><a href="#" target="_blank"><img  src="/static/images/socials/google_p.png" /></a></li>
+					<li><a href="#" target="_blank"><img  src="/static/images/socials/twitter.png" /></a></li>
+					<li><a href="http://weibo.com/522878950" target="_blank"><img  src="/static/images/socials/sina_weibo.png"/></a></li>
+				</ul>
+			</div>
+			<div id="search">
+				<form action="{% url 'search'%}" class="navbar-form navbar-left" role="search">
+				<button type="submit" class="button-search" style="background-color: Transparent;border-style :none;"></button>
+				<input type="text" name="q" value="Search..." onFocus="if (this.value == &#39;Search...&#39;) {this.value = &#39;&#39;;}" onBlur="if (this.value == &#39;&#39;) {this.value = &#39;Search...&#39;;}">
+				</form>
+			</div>
+		</div>
+		
+		<div id="logo">
+			<a href="#"><h1>Foolself Blog</h1></a>
+			<p> | a personal blog by foolself.</p>
+		</div>
+		
+		<nav>
+			<div class="wrap-nav">
+				<div class="menu">
+					<ul>
+						<li><a href="{% url 'home'%}">Home</a></li>
+						<li><a href="{% url 'blog'%}">Blog</a></li>
+						<li><a href="{% url 'message'%}">Message</a></li>
+						<li><a href="#">Gallery</a></li>
+						<li><a href="{% url 'about'%}">About</a></li>
+						{% if user.is_authenticated %}
+						<li style="float:right"><a href="{% url 'logout'%}">Logout</a></li>
+						<li><a href="{% url 'article_draft_list'%}">Draft</a></li>
+						<li><a href="{% url 'article_new'%}">Add</a></li>
+						{% else %}
+						<li style="float:right"><a href="{% url 'login'%}">Login</a></li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+		</nav>
+		
+	</div>
+</header>
+<!--------------Content--------------->
+<section id="content">
+	<div class="wrap-content">
+		<div class="row block">
+			<div id="main-content" class="col-2-3">
+				<div class="wrap-col">
+					{% block content %}
+					{% endblock %}
+				</div>
+			</div>
+			{% block side %}
+			{% include "right_side.html" %}
+			{% endblock %}
+		</div>
+	</div>
+</section>
+{% block footer %}
+{% include "footer.html" %}
+{% endblock %}
 
-  <body role="document">
-  <script src="/static/prism.js" ></script>
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-            <!--img class="imagehead" src="\static\image\head.jpg"-->
-          <a class="navbar-brand" href="#">Foolself Blog</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-              <li class="active" ><a href="{% url 'home'%}"><span class="glyphicon glyphicon-home">Home</span></a></li>
-              <li><a href="{% url 'about'%}"><span class="glyphicon glyphicon-info-sign">About</span></a></li>
-              <li><a href="{% url 'message'%}"><span class="glyphicon glyphicon-home">Message</span></a></li>
-              <li><form action="{% url 'search'%}" class="navbar-form navbar-left" role="search">
-<div class="input-group">
-  <input type="text" name="q" class="form-control" placeholder="Search" aria-describedby="basic-addon1">
-    <span class="input-group-addon" id="basic-addon1"><button type="submit" class="glyphicon glyphicon-search" style="background-color: Transparent;border-style :none;"></button></span>
 </div>
-      </form>
-              </li>
-              {% if user.is_authenticated %}
-                <li><a href="{% url 'article_draft_list'%}"><span class="glyphicon glyphicon-file">Draft</span></a></li>
-              <li><a href="{% url 'article_new'%}"><span class="glyphicon glyphicon-plus">Add</span></a></li>
-              {% endif %}
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-              {% if user.is_authenticated %}
-              <li><a href="{% url 'logout'%}"><span class="glyphicon glyphicon-log-out">Logout</span></a></li>
-              {% else %}
-              <li><wb:login-button type="3,2" onlogin="login" onlogout="logout">登录按钮</wb:login-button></li>
-              <!--li><a href="{% url 'login'%}"><span class="glyphicon glyphicon-log-in">Login</span></a></li-->
-              {% endif %}
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-  <div class="container theme-showcase" role="main">
-
-
-        <div class="row">
-            <div class="col-md-9">
-			    {% block content %}
-			    {% endblock %}
-		    </div>
-            <div class="col-md-3">
-                <div class="panel panel-success" id="Category">
-                    <div class="panel-heading">
-                    <h3 class="panel-title">Category</h3>
-                    </div>
-                    {% for category in category_list %}
-                    <div class="panel-body">
-                        <a href="{% url 'category' %}?cid={{ category.id }}">{{ category.name }}&nbsp&nbsp<span class="badge"></span></a>
-                    </div>
-                    {% endfor %}
-                </div>
-
-                <div class="panel panel-info" id="archive">
-                    <div class="panel-heading">
-                    <h3 class="panel-title">Archive</h3>
-                    </div>
-                    {% for archive in archive_list %}
-                    <div class="panel-body">
-                        <a href="#">{{ archive }}&nbsp&nbsp<span class="badge"></span></a>
-                    </div>
-                    {% endfor %}
-                </div>
-<br>
-<h2>Tags</h2>
-<hr class="featurette-divider">
-{% for key,value in tag_dict.items %}
-        <button type="button" class="{{ value }}"><a href="{% url 'tag' %}?tid={{ key.id }}" style="color:#000000">{{ key }}</a></button>
-{% endfor %}
-</div>
-            </div>
-
-   <br><br>
-
-<hr class="featurette-divider">
-<footer>
-<p><p class="pull-left">&copy; 2014 - 2016 Foolself. All Rights Reserved. </p><p class="pull-right"> Email: wi1191122731@gmail.com</p></p>
-</footer>
-</div> <!-- /container -->
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/docs.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
-</html>
-
+</body></html>

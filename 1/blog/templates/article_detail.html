@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="date">
-		{% if user.is_authenticated %}
-            {{ article.published_date }}
-			<a href="{% url 'blog.views.article_publish' pk=article.pk %}">Publish</a>
-		{% endif %}
 	{% if user.is_authenticated %}
+		Created:{{ article.created_date }}
+		{% if not article.published_date%}
+		<a href="{% url 'blog.views.article_publish' pk=article.pk %}">Publish</a>
+		{% endif %}
 		<a href="{% url 'article_edit' pk=article.pk %}">edit</a>
 		<a href="{% url 'article_remove' pk=article.pk %}">remove</a>
 	{% endif %}
@@ -14,50 +14,26 @@
     <p align="right">--{{ article.published_date}}</p>
 	<div class="content">{{ article.text | safe }}</div>
 <br><br>
-<h3>Comment Board</h3>
-<hr class="featurette-divider">
-<div class="comment">
-    {% for comment in comment_list %}
-<ul class="media-list">
-      <li class="media">
-        <div class="media-left">
-          <a href="#">
-            <img class="imagehead" src="/static/image/default_head.png" data-src="holder.js/64x64" alt="Generic placeholder image">
-          </a>
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading">{{ comment.username }} {{ comment.date_publish | date:'Y-m-d H:i:s' }}</h4>
-          <p>{{ comment.content | safe }}</p>
-            {% for children_comment in comment.children_comment %}
-            <div class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="imagehead" src="/static/image/default_head.png" data-src="holder.js/64x64" alt="Generic placeholder image">
-              </a>
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading">{{ children_comment.username }} {{ children_comment.date_publish | date:'Y-m-d H:i:s' }}</h4>
-                <p>{{ children_comment.content | safe }}</p>
-                {% endfor %}
-            {% for children_comment in comment.children_comment %}
-            </div></div>
-            {% endfor %}
-          </li>
-    </ul>
-    {% endfor %}
-</div>
-<br>
-<h3 id="respond">Add your comment now</h3>
-<hr class="featurette-divider">
-    <div id="commentform">
-<form method="POST" action="{% url 'comment_post' %}" class="post-form">{% csrf_token %}
-    <p>Name: {{ comment_form.username }}</p>
-    <p>Email:   {{ comment_form.email }}</p>
-    <p>content:{{ comment_form.content }}</p>
-    <p>parent_comment: {{ comment_form.pid}}</p>
-    <p style="visibility:hidden">{{ comment_form.article }}</p>
-    <button type="submit" class="save btn btn-default">Send</button>
-</form>
-    </div>
+
+<hr class="b">
+<!-- 新浪微博评论箱>
+<wb:comments url="http://foolselfblog.sinaapp.com{% url 'blog.views.article_detail' pk=article.pk %}" width="auto" skin="gray" appkey="3125712034" ></wb:comments-->
+
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key={{ article.id }} data-title={{ article.title }} data-url="http://foolselfblog.sinaapp.com{% url 'blog.views.article_detail' pk=article.pk %}"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"foolselfblog"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
 
 {% endblock %}

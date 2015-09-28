@@ -3,6 +3,7 @@ from django.conf.urls import url, include
 from blog.views import*
 
 urlpatterns = [url(r'^$', home,name = 'home'),
+               url(r'^blog/$',blog,name = 'blog'),
                url(r'^about/$',about,name = 'about'),
                url(r'^message/$',message,name = 'message'),
                url(r'^message/post/$',message_post,name = 'message_post'),
@@ -27,5 +28,5 @@ urlpatterns = [url(r'^$', home,name = 'home'),
                 url(r'^login/weibo_check/$', weibo_check, name='weibo_check'),     # 微博回调地址
                 #url(r'^register/$', 'register', name='register'),
                #url(r'^codetheme/get_user_info/$', 'get_user_info', name='get_user_info'),
-
+                #url(r'^user_info/$',user_info,name='user_info')
                ]
