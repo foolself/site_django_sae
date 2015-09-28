@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-{{ query }}
+<h3>Keywords: {{ query }}<h3>
 {% for item in result %}
-<h2 class="featurette-heading"><a href="{% url 'blog.views.article_detail' pk=item.pk %}">{{ item.title }}</a></h2>
+<br>
+<li class="featurette-heading"><a href="{% url 'blog.views.article_detail' pk=item.pk %}">{{ item.title }}</a></li>
 {% endfor %}
 {% endblock %}

@@ -6,12 +6,23 @@ from .forms import ArticleForm, CommentForm, MessageForm
 from django.contrib.auth.decorators import login_required
 from weibo import APIClient
 from django.db.models import Q
+import urllib
+import urllib2
+from django.http import HttpResponse
+from django.shortcuts import render_to_response
 
 URL = 'http://foolselfblog.sinaapp.com'
 APP_KEY = '3125712034' # app key
 APP_SECRET = '75680bf3386cb5482df99fbbad467ea9' # app secret
 CALLBACK_URL = 'http://www.foolselfblog.sinaapp.com/' # callback url
 CALLBACK_URL = URL+'/login/weibo_check/'
+USER_INFO_URL = 'https://api.weibo.com/2/users/show.json'
+
+def my_custom_page_not_found_view(request):
+    return render(request,'404.html')
+
+def my_custom_error_view(request):
+    return render(request,'500.html')
 
 def global_setting(request):
     title = "foolself blog"
@@ -25,6 +36,9 @@ def global_setting(request):
     return locals()
 
 def home(request):
+    return render(request,'home.html')
+
+def blog(request):
     article_list=Article.objects.filter(published_date__isnull=False).order_by('-pk')#'-published_date')
     return render(request,'index.html',{'article_list':article_list,})
 
@@ -45,10 +59,8 @@ def article_detail(request,pk):
                 break
         if comment.pid is None:
             comment_list.append(comment)
-    if article.view_count == None:
-        article.view_count = 1
-    else:
-        article.view_count += 1
+
+    article.view_count += 1
     article.comment_count = len(comments)
     article.save()
     return render(request,'article_detail.html',locals())
@@ -74,6 +86,9 @@ def article_new(request):
         if form.is_valid():
             article=form.save(commit=False)
             article.author=request.user
+            article.like_count=0
+            article.view_count=0
+            article.comment_count=0
             article.save()
             return redirect('blog.views.article_detail',pk=article.pk)
     else:
@@ -108,7 +123,7 @@ def article_publish(request,pk):
 def article_remove(request,pk):
     article=get_object_or_404(Article,pk=pk)
     article.delete()
-    return redirect('blog.views.home')
+    return redirect('blog.views.blog')
 def article_next(request,pk):
     pk=pk-1
     article=get_object_or_404(Article,pk=pk)
@@ -153,7 +168,6 @@ def tag(request):
     return render(request, 'tag.html', locals())
 
 def archive(request):
-
     return render(request, 'archive.html')
 
 def about(request):
@@ -173,8 +187,8 @@ def weibo_check(request):
         client = APIClient(app_key=APP_KEY, app_secret=APP_SERCET, redirect_uri=CALLBACK_URL)
         r = client.request_access_token(code)
         access_token = r.access_token   # 返回的token，类似abc123xyz456
-        # expires_in = r.expires_in       # token过期的UNIX时间：http://zh.wikipedia.org/wiki/UNIX%E6%97%B6%E9%97%B4
-        # uid = r.uid
+        expires_in = r.expires_in       # token过期的UNIX时间：http://zh.wikipedia.org/wiki/UNIX%E6%97%B6%E9%97%B4
+        uid = r.uid
         # 在此可保存access token
         client.set_access_token(access_token, expires_in)
         request.session['access_token'] = access_token
@@ -194,3 +208,14 @@ def search(request):
     else:
         result = []
     return  render(request,'search.html',{'query':query,'result':result})
+'''
+def user_info(request):
+    if request.session['uid']:
+        data = {'access_token': request.session['access_token'], 'uid': request.session['uid']}
+        params = urllib.urlencode(data)
+        values = urllib2.Request(USER_INFO_URL+'?%s' %params)
+        response = urllib2.urlopen(values)
+        return HttpResponse(request.session['uid'])
+    else :
+        return HttpResponse("no user login")
+'''
