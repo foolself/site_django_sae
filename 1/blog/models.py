@@ -49,7 +49,7 @@ class Article(models.Model):
     view_count = models.IntegerField(default=0,blank=True,null=True)
     comment_count = models.IntegerField(default=0,blank=True,null=True)
     category = models.ForeignKey(Category, blank=True, null=True, verbose_name='Category')
-    tag = models.ManyToManyField(Tag, verbose_name='Tag')
+    tag = models.ManyToManyField(Tag, blank=True, null=True, verbose_name='Tag')
 
     objects = ArticleManager()
 

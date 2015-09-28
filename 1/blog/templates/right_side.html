@@ -1,0 +1,37 @@
+<div id="sidebar" class="col-1-3">
+    <div class="wrap-col">
+        <div class="box">
+            <div class="heading"><h2>Categories</h2></div>
+            <div class="content">
+                <ul>
+                    {% for category in category_list %}
+                    <li><a href="{% url 'category' %}?cid={{ category.id }}">{{ category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="box">
+            <div class="heading"><h2>Archive</h2></div>
+            <div class="content">
+                <ul>
+                    {% for archive in archive_list %}
+                    <li><a href="#">{{ archive }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="box">
+            <div class="heading"><h2>Popular Post</h2></div>
+            <div class="content">
+                <div class="post">
+                    <img src="/static/images/img4.jpg" height="50px" width="50px"/>
+                    <h4><a href="#">Lorem ipsum dolor sit</a></h4>
+                    <p>November 11 ,2012</p>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <iframe width="100%" height="480" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=480&fansRow=2&ptype=1&speed=0&skin=5&isTitle=0&noborder=0&isWeibo=1&isFans=0&uid=2826467967&verifier=147dbed5&dpc=1"></iframe>
+        </div>
+    </div>
+</div>
