@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -33,7 +33,7 @@ class ArticleManager(models.Manager):
         distinct_date_list = []
         date_list = self.values('published_date')
         for date in date_list:
-            date = date['published_date']
+            date = date['published_date'].strftime('%y/%m')
             if date not in distinct_date_list:
                 distinct_date_list.append(date)
         return distinct_date_list

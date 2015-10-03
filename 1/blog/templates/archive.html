@@ -1,1 +1,21 @@
-OK
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<h2>{{year}}年{{month}}月 文章归档:</h2>
+<hr class="l">
+{% for article in article_list %}
+					<article>
+						<div class="heading">
+							<h2><a href="{% url 'blog.views.article_detail' pk=article.pk %}">{{ article.title }}</a></h2>
+						</div>
+						<div class="content">
+							<img src="{{ article.imageURL}}" width="250px" height="100px"/>
+							<p>{{ article.text | striptags | truncatechars:100 }}</p>
+
+						</div>
+						<div class="info">
+							<p>publish: {{ article.published_date| date:'Y-m-d' }}...{{ article.view_count }}-views...{{ article.comment_count }}-comments</p>
+						</div>
+					</article>
+{% endfor %}
+{% endblock %}

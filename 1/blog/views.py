@@ -36,9 +36,6 @@ def global_setting(request):
     return locals()
 
 def home(request):
-    return render(request,'home.html')
-
-def blog(request):
     article_list=Article.objects.filter(published_date__isnull=False).order_by('-pk')#'-published_date')
     return render(request,'index.html',{'article_list':article_list,})
 
@@ -168,7 +165,10 @@ def tag(request):
     return render(request, 'tag.html', locals())
 
 def archive(request):
-    return render(request, 'archive.html')
+    year = request.GET.get('y',None)
+    month = request.GET.get('m', None)
+    article_list = Article.objects.filter(published_date__icontains=year+'-'+month+'-')
+    return render(request, 'archive.html',{'article_list': article_list,'year':year,'month':month})
 
 def about(request):
     return render(request,'about.html')

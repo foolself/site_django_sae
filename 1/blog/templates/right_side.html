@@ -15,7 +15,7 @@
             <div class="content">
                 <ul>
                     {% for archive in archive_list %}
-                    <li><a href="#">{{ archive }}</a></li>
+                    <li><a href="{% url 'archive' %}?y={{ archive | slice:':2' }}&m={{ archive | slice:'3:5' }}">{{ archive }}</a></li>
                     {% endfor %}
                 </ul>
             </div>

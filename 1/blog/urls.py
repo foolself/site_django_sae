@@ -3,7 +3,6 @@ from django.conf.urls import url, include
 from blog.views import*
 
 urlpatterns = [url(r'^$', home,name = 'home'),
-               url(r'^blog/$',blog,name = 'blog'),
                url(r'^about/$',about,name = 'about'),
                url(r'^message/$',message,name = 'message'),
                url(r'^message/post/$',message_post,name = 'message_post'),
