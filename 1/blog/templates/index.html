@@ -5,15 +5,19 @@
 	{% for article in article_list %}
 					<article>
 						<div class="heading">
-							<h2><a href="{% url 'blog.views.article_detail' pk=article.pk %}">{{ article.title }}</a></h2>
+							<h2><a href="{% url 'blog.views.article_detail' pk=article.pk %}">{{ article.title }}</a><span style="font-size:20px;float:right;color:#A5A5A5">{{ article.published_date| date:'Y-m-d' }}</span></h2>
 						</div>
 						<div class="content">
+							{% if article.imageURL %}
 							<img src="{{ article.imageURL}}" width="250px" height="100px"/>
-							<p>{{ article.text | striptags | truncatechars:100 }}</p>
+							{% endif %}
+							<p>{{ article.text | striptags | truncatechars:140 }}</p>
+							<br><br><br>
 
 						</div>
 						<div class="info">
-							<p>publish: {{ article.published_date| date:'Y-m-d' }}...{{ article.view_count }}-views...{{ article.comment_count }}-comments</p>
+							<p>{% for tag in article.tag.all %} <a href="{% url 'tag' %}?tid={{ tag.id }}">{{ tag }}</a> {% endfor %}
+							<span style="float:right">{{ article.view_count }}-views...{{ article.comment_count }}-comments</span></p>
 						</div>
 					</article>
 	{% endfor %}

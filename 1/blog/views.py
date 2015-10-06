@@ -29,10 +29,6 @@ def global_setting(request):
     category_list = Category.objects.all()[:6]
     archive_list = Article.objects.distinct_date()
     tag_list = Tag.objects.all()
-    tag_format_ = ["btn btn-danger","btn btn-success","btn btn-default","btn btn-info","btn btn-warning","btn btn-primary",]
-    tag_dict = {}
-    for i in range(len(tag_list)):
-        tag_dict[tag_list[i]]=tag_format_[i % len(tag_format_)]
     return locals()
 
 def home(request):
@@ -162,7 +158,7 @@ def tag(request):
     except Tag.DoesNotExist:
         return render(request, 'failure.html', {'reason': 'tag not exit'})
     article_list = Article.objects.filter(tag=tag)
-    return render(request, 'tag.html', locals())
+    return render(request, 'index.html', locals())
 
 def archive(request):
     year = request.GET.get('y',None)

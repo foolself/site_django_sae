@@ -15,9 +15,17 @@
             <div class="content">
                 <ul>
                     {% for archive in archive_list %}
-                    <li><a href="{% url 'archive' %}?y={{ archive | slice:':2' }}&m={{ archive | slice:'3:5' }}">{{ archive }}</a></li>
+                    <li><a href="{% url 'archive' %}?y={{ archive | slice:':2' }}&m={{ archive | slice:'5:7' }}">{{ archive }}</a></li>
                     {% endfor %}
                 </ul>
+            </div>
+        </div>
+        <div class="box">
+            <div class="heading"><h2>Cloud Tag</h2></div>
+            <div class="content">
+                    {% for tag in tag_list %}
+                    <li><a href="{% url 'tag' %}?tid={{ tag.id }}">{{ tag }}</a></li>
+                    {% endfor %}
             </div>
         </div>
         <div class="box">
