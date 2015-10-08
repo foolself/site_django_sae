@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class Tag(models.Model):
     name = models.CharField(max_length=30, verbose_name='tag_name')
+    count = models.IntegerField(default=0, verbose_name='tag_count')
 
     class Meta:
         verbose_name = 'Tag'
@@ -33,9 +34,12 @@ class ArticleManager(models.Manager):
         distinct_date_list = []
         date_list = self.values('published_date')
         for date in date_list:
-            date = date['published_date'].strftime('%y年%m月')
-            if date not in distinct_date_list:
-                distinct_date_list.append(date)
+            try:
+                date = date['published_date'].strftime('%y年%m月')
+                if date not in distinct_date_list:
+                    distinct_date_list.append(date)
+            except:
+                pass
         return distinct_date_list
 
 class Article(models.Model):

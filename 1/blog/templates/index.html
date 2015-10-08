@@ -16,7 +16,7 @@
 
 						</div>
 						<div class="info">
-							<p>{% for tag in article.tag.all %} <a href="{% url 'tag' %}?tid={{ tag.id }}">{{ tag }}</a> {% endfor %}
+							<p>Tag: {% for tag in article.tag.all %} <a href="{% url 'tag' %}?tid={{ tag.id }}">{{ tag }}</a> {% endfor %}
 							<span style="float:right">{{ article.view_count }}-views...{{ article.comment_count }}-comments</span></p>
 						</div>
 					</article>

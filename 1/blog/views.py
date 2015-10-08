@@ -28,7 +28,15 @@ def global_setting(request):
     title = "foolself blog"
     category_list = Category.objects.all()[:6]
     archive_list = Article.objects.distinct_date()
+    popular_article_list=Article.objects.filter(published_date__isnull=False).order_by('-view_count')[:3]
     tag_list = Tag.objects.all()
+    #标签云中 设置标签字体的大小
+    for tag in tag_list:
+        tag.count = len(Article.objects.filter(tag=tag))
+        if tag.count>30 :
+            tag.count = 50
+        else:
+            tag.count = 20+tag.count*2
     return locals()
 
 def home(request):
