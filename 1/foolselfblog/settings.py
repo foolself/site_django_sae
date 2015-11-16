@@ -33,9 +33,9 @@ else:
 SECRET_KEY = '&4pismbdo@v58#s9df$)yxm!k^695knorcu=ra_nh1g+09&p=5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS=[]
-#ALLOWED_HOSTS="*"
+DEBUG = False
+#ALLOWED_HOSTS=[]
+ALLOWED_HOSTS="*"
 
 # Application definition
 

@@ -40,7 +40,7 @@ def global_setting(request):
     return locals()
 
 def home(request):
-    article_list=Article.objects.filter(published_date__isnull=False).order_by('-pk')#'-published_date')
+    article_list=Article.objects.filter(published_date__isnull=False).order_by('-id')#'-published_date')
     return render(request,'index.html',{'article_list':article_list,})
 
 
