@@ -3,7 +3,7 @@ from django.contrib import admin
 from blog.models import Article, Comment, Message, Category, Tag
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'created_date', 'published_date', )
+    list_display = ('title', 'category', 'author', 'created_date', 'published_date', )
     class Media:
         js = (
             '/static/js/tinymce/tinymce.min.js',
