@@ -9,3 +9,6 @@ django 1.8.4
 代码高亮 prism
 微博登录 ing...
 
+关于如何部署在新浪SAE，博客中有详细教程：
+http://www.foolselfblog.sinaapp.com/article/28/
+
